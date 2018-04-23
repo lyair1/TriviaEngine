@@ -10,6 +10,9 @@ namespace BETest
     {
         static void Main(string[] args)
         {
+            GoogleSearchClient gsc = new GoogleSearchClient();
+            Console.WriteLine(gsc.SearchAndCountResults("(organs found inside skull) AND \"brain\"").Result);
+            Console.ReadLine();
         }
     }
 }
