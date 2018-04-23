@@ -12,6 +12,8 @@ namespace BETest
         {
             GoogleSearchClient gsc = new GoogleSearchClient();
             Console.WriteLine(gsc.SearchAndCountResults("(organs found inside skull) AND \"brain\"").Result);
+            Console.WriteLine(gsc.SearchAndCountMatchesOnPage("organs found inside skull", "brain").Result);
+            Console.WriteLine(gsc.SearchAndCountMatchesOnPage("organs found inside skull", "heart").Result);
             Console.ReadLine();
         }
     }
