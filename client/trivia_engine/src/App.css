@@ -1,25 +1,90 @@
 .App {
   text-align: center;
+  display: flex;
+  flex-direction: column;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+.App-Title {
+  font-family: 'Black Han Sans', sans-serif;
+  color: #E30127;
+  font-size: 100px;
+  text-shadow: -1px 0 black, 0 3px black, 4px 0 black, 0 -1px black;
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+.App-Input-Question {
+  margin-top: 30px;
+  width: 800px;
+  text-align: center;
+  padding: 10px;
+  font-size: 24px;
+  border-width: 0px;
+  background-color: #ffc857;
+  color: black;
+  border-radius: 8px;
+  box-shadow: 2px 0px 5px rgba(66,66,66,.75);
+  text-shadow: -50px 0px 0px rgba(66,66,66,.0);
 }
 
-.App-title {
-  font-size: 1.5em;
+.App-Input-Answer {
+  margin-top: 30px;
+  width: 500px;
+  text-align: center;
+  padding: 10px;
+  font-size: 24px;
+  border-width: 0px;
+  background-color: #ffc857;
+  color: black;
+  border-radius: 8px;
+  box-shadow: 2px 0px 5px rgba(66,66,66,.75);
+  text-shadow: -50px 0px 0px rgba(66,66,66,.0);
 }
 
-.App-intro {
-  font-size: large;
+.App-Form-Container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.App-Button-Disabled {
+  margin-top: 30px;
+	background-color:gray;
+	-moz-border-radius:28px;
+	-webkit-border-radius:28px;
+	border-radius:28px;
+	border:1px solid gray;
+	display:inline-block;
+	cursor:pointer;
+  color:black;
+  font-weight: 500;
+	font-size:24px;
+	padding:16px 31px;
+}
+
+.App-Button {
+  margin-top: 30px;
+	background-color:#e30127;
+	-moz-border-radius:28px;
+	-webkit-border-radius:28px;
+	border-radius:28px;
+	border:1px solid #c5283d;
+	display:inline-block;
+	cursor:pointer;
+  color:black;
+  font-weight: 500;
+	font-size:24px;
+	padding:16px 31px;
+}
+.App-Button:hover {
+	background-color:#c5283d;
+}
+.App-Button:active {
+	position:relative;
+	top:1px;
+}
+
+.App-Github {
+  margin-top: 30px;
+  font-size: 30px;
 }
 
 @keyframes App-logo-spin {

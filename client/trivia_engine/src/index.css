@@ -1,5 +1,11 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
+  font-family: 'Oswald', sans-serif;
+  background-color: #035DAB;
+}
+
+a {
+  color: inherit; /* blue colors for links too */
+  text-decoration: inherit; /* no underline */
 }
