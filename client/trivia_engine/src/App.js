@@ -28,23 +28,6 @@ class App extends Component {
     return this.state.in_question.length > 0 && this.state.in_answer_1.length > 0 && this.state.in_answer_2.length > 0 && this.state.in_answer_3.length > 0
   }
 
-  getBestAnswer(question) {
-    let highIndex = 0;
-    let highProp = question.prob[highIndex];
-    
-    if (highProp < question.prob[1]) {
-      highIndex = 1;
-      highProp = question.prob[highIndex];
-    }
-
-    if (highProp < question.prob[2]) {
-      highIndex = 2;
-      highProp = question.prob[highIndex];
-    }
-    
-    return highIndex;
-  }
-
   render() {
     return (
       <div className="App">
@@ -76,15 +59,15 @@ class App extends Component {
               <tbody>
                 {
                   this.props.questions.map((question, index) => {
-                  let bestIndex = this.getBestAnswer(question);
+                  let bestIndex = 0;
                   
                   return (
                   <tr key={index}>
                     <td>{index + 1}</td>
-                    <td>{question.question}</td>
-                    <td className={bestIndex === 0 ? "App-Table-Correct-td" : ""}>{question.answer1} ({question.prob[0]})</td>
-                    <td className={bestIndex === 1 ? "App-Table-Correct-td" : ""}>{question.answer2} ({question.prob[1]})</td>
-                    <td className={bestIndex === 2 ? "App-Table-Correct-td" : ""}>{question.answer3} ({question.prob[2]})</td>
+                    <td>{question.Question}</td>
+                    <td className={bestIndex === 0 ? "App-Table-Correct-td" : ""}>{question.Answers[0].Answer} ({question.Answers[0].Score})</td>
+                    <td className={bestIndex === 1 ? "App-Table-Correct-td" : ""}>{question.Answers[1].Answer} ({question.Answers[1].Score})</td>
+                    <td className={bestIndex === 2 ? "App-Table-Correct-td" : ""}>{question.Answers[2].Answer} ({question.Answers[2].Score})</td>
                   </tr>
                 )})}
               </tbody>

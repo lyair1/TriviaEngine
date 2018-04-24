@@ -7,7 +7,7 @@ export function receiveAnswer(json) {
 export function fetchStuff(data) {
     console.log(JSON.stringify(data));
   return dispatch => {
-    return fetch('/answer', {
+    return fetch('/Trivia/AnswerQuestion', {
       method: 'POST',
       headers: new Headers({
         'Content-Type': 'application/json',
