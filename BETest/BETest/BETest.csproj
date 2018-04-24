@@ -53,8 +53,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GoogleSearchClient.cs" />
-    <Compile Include="ITriviaSolver.cs" />
+    <Compile Include="TriviaSolvers\CountMatchesOnSearchPageSolver.cs" />
+    <Compile Include="TriviaSolvers\ITriviaSolver.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="TriviaSolvers\QuestionAnswerMatchPercentSolver.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
