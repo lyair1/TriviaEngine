@@ -21,6 +21,7 @@ var howManyResults = function(query, aIdx) {
       resolve(result)
     })
     .catch(function (error) {
+      console.log(error)
       let result = {
         aIdx,
         totalResults: -1
@@ -57,15 +58,16 @@ var countAnswerInResponse = function(query, answers) {
       let lowerData = JSON.stringify(response.data).toLowerCase()
       let countArr = [0, 0, 0]
 
-      countArr[0] = occurrences(lowerData, answers[0], false);
-      countArr[1] = occurrences(lowerData, answers[1], false);
-      countArr[2] = occurrences(lowerData, answers[2], false);
+      countArr[0] = occurrences(lowerData, answers[0].trim().toLowerCase(), false);
+      countArr[1] = occurrences(lowerData, answers[1].trim().toLowerCase(), false);
+      countArr[2] = occurrences(lowerData, answers[2].trim().toLowerCase(), false);
 
       console.log(JSON.stringify(countArr));
 
       resolve(countArr)
     })
     .catch(function (error) {
+      console.log(error)
       resolve([0, 0, 0])
     });
   });
@@ -149,7 +151,7 @@ exports.findAnswer = function(req, res) {
     })
     .catch(function (error) {
       console.log(error);
-      res.json('failed');
+      res.json({'status' : 'failed'});
     });
 
     // Case #2: question -> count answer appearance in results
@@ -180,7 +182,7 @@ exports.findAnswer = function(req, res) {
     })
     .catch(function (error) {
       console.log(error);
-      res.json('failed');
+      res.json({'status' : 'failed'});
     });
   };
 

@@ -87,6 +87,25 @@
   font-size: 30px;
 }
 
+.App-Table-Container {
+  margin-top: 30px;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.App-Table {
+  width: 90%;
+}
+
+.App-Table, td {
+  background-color: gray;
+}
+
+.App-Table-Correct-td {
+  background-color: green;
+}
+
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }

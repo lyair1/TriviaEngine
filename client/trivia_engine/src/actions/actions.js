@@ -1,9 +1,5 @@
 import * as types from './actionsTypes';
 
-function url() {
-  return 'http://localhost:1234';
-}
-
 export function receiveAnswer(json) {
   return {type: types.ANSWER_RECEIVED, payload: json};
 }
@@ -20,9 +16,14 @@ export function fetchStuff(data) {
       body: JSON.stringify(data)
     })
     .then(response => {
-        console.log(response)
-        return response.json()
+        let json = response ? response.json() : {};
+        return json;
     })
-    .then(json => dispatch(receiveAnswer(json)));
+    .then(json => {
+        console.log(json)
+        dispatch(receiveAnswer(json))
+      }).catch((error) => {
+        console.log(error);
+      });
   };
 }
