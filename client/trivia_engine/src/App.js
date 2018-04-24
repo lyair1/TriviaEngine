@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import * as actions from './actions/actions';
 import './App.css';
 
 class App extends Component {
@@ -9,6 +11,15 @@ class App extends Component {
       in_answer_1: '',
       in_answer_2: '',
       in_answer_3: '',
+    }
+  }
+
+  getRequestObject() {
+    return {
+      question: this.state.in_question,
+      answer1: this.state.in_answer_1,
+      answer2: this.state.in_answer_2,
+      answer3: this.state.in_answer_3,
     }
   }
 
@@ -29,7 +40,11 @@ class App extends Component {
           <input type="text" value={this.state.in_answer_2} placeholder={"Answer #2"} className="App-Input-Answer" onChange={(e) => this.setState({in_answer_2: e.target.value})}/>
           <input type="text" value={this.state.in_answer_3} placeholder={"Answer #3"} className="App-Input-Answer" onChange={(e) => this.setState({in_answer_3: e.target.value})}/>
 
-          <button disabled={!this.isSubmitEnabled()} className={this.isSubmitEnabled() ? "App-Button" : "App-Button-Disabled"}>Find The Answer</button>
+          <button disabled={!this.isSubmitEnabled()} className={this.isSubmitEnabled() ? "App-Button" : "App-Button-Disabled"} onClick={() => this.props.getAnswer(this.getRequestObject())}>Find The Answer</button>
+        </div>
+
+        <div>
+          {JSON.stringify(this.props.questions)}
         </div>
 
         <div>
@@ -40,4 +55,20 @@ class App extends Component {
   }
 }
 
-export default App;
+function mapStateToProps(state) {
+  return {
+    questions: state.questions
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    getAnswer: ((req) => dispatch(actions.fetchStuff(req)))
+  };
+}
+
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);
