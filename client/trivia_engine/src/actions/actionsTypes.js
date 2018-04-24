@@ -1,0 +1,2 @@
+export const GET_ANSWER = 'GET_ANSWER';
+export const ANSWER_RECEIVED = 'ANSWER_RECEIVED';

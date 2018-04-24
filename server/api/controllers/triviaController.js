@@ -21,6 +21,7 @@ var howManyResults = function(query, aIdx) {
       resolve(result)
     })
     .catch(function (error) {
+      console.log(error)
       let result = {
         aIdx,
         totalResults: -1
@@ -30,23 +31,43 @@ var howManyResults = function(query, aIdx) {
   });
 }
 
+function occurrences(string, subString, allowOverlapping) {
+
+  string += "";
+  subString += "";
+  if (subString.length <= 0) return (string.length + 1);
+
+  var n = 0,
+      pos = 0,
+      step = allowOverlapping ? 1 : subString.length;
+
+  while (true) {
+      pos = string.indexOf(subString, pos);
+      if (pos >= 0) {
+          ++n;
+          pos += step;
+      } else break;
+  }
+  return n;
+}
+
 var countAnswerInResponse = function(query, answers) {
   return new Promise(function(resolve, reject) {
-    axios.get(endpoint + query.replace(/ /g, "+"))
+    axios.get(endpoint + query)
     .then(function (response) {
       let lowerData = JSON.stringify(response.data).toLowerCase()
-
       let countArr = [0, 0, 0]
-      
-      countArr[0] = (lowerData.match(new RegExp( answers[0], 'g')) || []).length;
-      countArr[1] = (lowerData.match(new RegExp( answers[1], 'g')) || []).length;
-      countArr[2] = (lowerData.match(new RegExp( answers[2], 'g')) || []).length;
 
-      console.log(countArr)
+      countArr[0] = occurrences(lowerData, answers[0].trim().toLowerCase(), false);
+      countArr[1] = occurrences(lowerData, answers[1].trim().toLowerCase(), false);
+      countArr[2] = occurrences(lowerData, answers[2].trim().toLowerCase(), false);
+
+      console.log(JSON.stringify(countArr));
 
       resolve(countArr)
     })
     .catch(function (error) {
+      console.log(error)
       resolve([0, 0, 0])
     });
   });
@@ -77,12 +98,13 @@ var printStatistics = function(scoresArray) {
 }
 
 exports.findAnswer = function(req, res) {
+    console.log('req:' + JSON.stringify(req.body))
     var promises = [];
 
-    let question = req.body.q;
-    let answer1 = req.body.a1;
-    let answer2 = req.body.a2;
-    let answer3 = req.body.a3;
+    let question = req.body.question;
+    let answer1 = req.body.answer1;
+    let answer2 = req.body.answer2;
+    let answer3 = req.body.answer3;
 
     // scores array
     let scoresArray = [0, 0, 0]
@@ -117,12 +139,19 @@ exports.findAnswer = function(req, res) {
 
       waitCount--;
       if (waitCount <= 0) {
-        res.json(getProbabilities(scoresArray))
+        let data = {
+          'prob' : getProbabilities(scoresArray),
+          'question' : question,
+          'answer1' : answer1,
+          'answer2' : answer2,
+          'answer3' : answer3
+        };
+        res.json(data)
       }
     })
     .catch(function (error) {
       console.log(error);
-      res.json('failed');
+      res.json({'status' : 'failed'});
     });
 
     // Case #2: question -> count answer appearance in results
@@ -141,12 +170,19 @@ exports.findAnswer = function(req, res) {
 
       waitCount--;
       if (waitCount <= 0) {
-        res.json(getProbabilities(scoresArray))
+        let data = {
+          'prob' : getProbabilities(scoresArray),
+          'question' : question,
+          'answer1' : answer1,
+          'answer2' : answer2,
+          'answer3' : answer3
+        };
+        res.json()
       }
     })
     .catch(function (error) {
       console.log(error);
-      res.json('failed');
+      res.json({'status' : 'failed'});
     });
   };
 
