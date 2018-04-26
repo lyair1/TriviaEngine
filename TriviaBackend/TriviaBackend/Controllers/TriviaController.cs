@@ -11,11 +11,15 @@ namespace TriviaBackend.Controllers
 {
     public class TriviaController : Controller
     {
-        private ITriviaSolver triviaSolver;
+        private TriviaSolverCombiner triviaSolverCombiner;
 
         public TriviaController()
         {
-            triviaSolver = new CountMatchesOnSearchPageSolver();
+            triviaSolverCombiner = new TriviaSolverCombiner(new List<Tuple<ITriviaSolver, int>>()
+                                                                {
+                                                                    new Tuple<ITriviaSolver, int>(new CountMatchesOnSearchPageSolver(), 5),
+                                                                    new Tuple<ITriviaSolver, int>(new QuestionAnswerMatchPercentSolver(), 10),
+                                                                });
         }
         // GET: Trivia
         public TriviaQuestion Index()
@@ -47,11 +51,13 @@ namespace TriviaBackend.Controllers
         [HttpPost]
         public async Task<JsonResult> AnswerQuestion(TriviaQuestion triviaQuestion)
         {
-            return Json(await this.triviaSolver.SolveQuestion(
+            var json = Json(await this.triviaSolverCombiner.SolveQuestions(
                 triviaQuestion.Question,
                 triviaQuestion.Answer1,
                 triviaQuestion.Answer2,
                 triviaQuestion.Answer3));
+
+            return json;
         }
     }
 }
