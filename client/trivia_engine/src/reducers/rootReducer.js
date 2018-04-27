@@ -15,8 +15,20 @@ function questions(state = initialState.questions, action) {
     }
   }
 
+function isFetching(state = initialState.isFetching, action) {
+  switch (action.type) {
+    case types.START_FETCH:
+      return true;
+    case types.END_FETCH:
+      return false;
+    default:
+      return state;
+  }
+}
+
 const rootReducer = combineReducers({
-  questions
+  questions,
+  isFetching
 });
 
 export default rootReducer;

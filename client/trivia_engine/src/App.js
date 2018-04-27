@@ -34,14 +34,19 @@ class App extends Component {
         <h1 className="App-Title">The Trivia Engine</h1>
         <div className="App-Form-Container">
           {/* Questions */}
-          <input type="text" value={this.state.in_question} placeholder={"Enter Question"} className="App-Input-Question" onChange={(e) => this.setState({in_question: e.target.value})}/>
+          <input disabled={this.props.isFetching} type="text" value={this.state.in_question} placeholder={"Enter Question"} className="App-Input-Question" onChange={(e) => this.setState({in_question: e.target.value})}/>
           
           {/* Answers */}
-          <input type="text" value={this.state.in_answer_1} placeholder={"Answer #1"} className="App-Input-Answer" onChange={(e) => this.setState({in_answer_1: e.target.value})}/>
-          <input type="text" value={this.state.in_answer_2} placeholder={"Answer #2"} className="App-Input-Answer" onChange={(e) => this.setState({in_answer_2: e.target.value})}/>
-          <input type="text" value={this.state.in_answer_3} placeholder={"Answer #3"} className="App-Input-Answer" onChange={(e) => this.setState({in_answer_3: e.target.value})}/>
+          <input disabled={this.props.isFetching} type="text" enabled value={this.state.in_answer_1} placeholder={"Answer #1"} className="App-Input-Answer" onChange={(e) => this.setState({in_answer_1: e.target.value})}/>
+          <input disabled={this.props.isFetching} type="text" value={this.state.in_answer_2} placeholder={"Answer #2"} className="App-Input-Answer" onChange={(e) => this.setState({in_answer_2: e.target.value})}/>
+          <input disabled={this.props.isFetching} type="text" value={this.state.in_answer_3} placeholder={"Answer #3"} className="App-Input-Answer" onChange={(e) => this.setState({in_answer_3: e.target.value})}/>
 
-          <button disabled={!this.isSubmitEnabled()} className={this.isSubmitEnabled() ? "App-Button" : "App-Button-Disabled"} onClick={() => this.props.getAnswer(this.getRequestObject())}>Find The Answer</button>
+          {this.props.isFetching ? 
+            (<div className="loader"></div>)
+            :
+            <button disabled={!this.isSubmitEnabled()} className={this.isSubmitEnabled() ? "App-Button" : "App-Button-Disabled"} onClick={() => this.props.getAnswer(this.getRequestObject())}>Find The Answer</button>
+        }
+          
         </div>
 
         {this.props.questions.length > 0 &&
@@ -85,7 +90,8 @@ class App extends Component {
 
 function mapStateToProps(state) {
   return {
-    questions: state.questions
+    questions: state.questions,
+    isFetching: state.isFetching
   };
 }
 
